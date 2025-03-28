@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Random Quote</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    #quote-box { padding: 20px; border: 1px solid #ccc; display: inline-block; border-radius: 8px; max-width: 600px; }
+    #quote { font-size: 1.5em; margin-bottom: 10px; }
+    #author { font-style: italic; color: #555; }
+    button { margin-top: 15px; padding: 10px 20px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <div id="quote-box">
+    <div id="quote">Нажмите кнопку, чтобы получить цитату</div>
+    <div id="author"></div>
+    <button onclick="fetchQuote()">Новая цитата</button>
+  </div>
+
+  <script>
+    async function fetchQuote() {
+      const response = await fetch('/quote');
+      const data = await response.json();
+      if (data.content) {
+        document.getElementById('quote').textContent = data.content;
+        document.getElementById('author').textContent = `— ${data.author}`;
+      } else {
+        document.getElementById('quote').textContent = 'Ошибка при загрузке цитаты.';
+        document.getElementById('author').textContent = '';
+      }
+    }
+  </script>
+</body>
+</html>
